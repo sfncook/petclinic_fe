@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-const purple = '#3f51b5';
+// const purple = '#3f51b5';
 
 class PetRow extends Component {
 
   render() {
-    console.log('PetRow props:',this.props);
+    const pet = this.props.pet;
+    // console.log('PetRow props:',this.props);
     return (
-      <TableRow key={pet.id}>
+      <TableRow>
         <TableCell component="th" scope="row">
           {pet.name}
         </TableCell>
@@ -17,5 +19,9 @@ class PetRow extends Component {
     );
   }
 }
+
+PetRow.propTypes = {
+  pet: PropTypes.object.isRequired
+};
 
 export default PetRow;

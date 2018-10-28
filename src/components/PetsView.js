@@ -10,6 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {getAllPets} from "../stateHandlers/actions";
+import PetRow from './PetRow';
 
 const purple = '#3f51b5';
 
@@ -74,11 +75,7 @@ class PetsView_ extends Component {
                 <TableBody>
                   {this.props.pets.map(pet => {
                     return (
-                      <TableRow key={pet.id}>
-                        <TableCell component="th" scope="row">
-                          {pet.name}
-                        </TableCell>
-                      </TableRow>
+                      <PetRow key={pet.id} pet={pet}/>
                     );
                   })}
                 </TableBody>

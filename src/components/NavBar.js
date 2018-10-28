@@ -57,8 +57,6 @@ class NavBar_ extends Component {
   };
 
   render() {
-    console.log('this.props.location:',this.props.location);
-
     const purple = '#3f51b5';
     let petsBtnColor = purple;
     let vetsBtnColor = purple;
