@@ -52,20 +52,29 @@ class NavBar_ extends Component {
     this.props.history.push('/vets');
   };
 
+  onClickAppts = () => {
+    this.props.history.push('/appts');
+  };
+
   render() {
     console.log('this.props.location:',this.props.location);
 
     const purple = '#3f51b5';
     let petsBtnColor = purple;
     let vetsBtnColor = purple;
+    let apptsBtnColor = purple;
     let petsColor = 'white';
     let vetsColor = 'white';
+    let apptsColor = 'white';
     if(this.props.location.pathname==='/' || this.props.location.pathname==='/pets') {
       petsBtnColor = 'white';
       petsColor = purple;
     } else if(this.props.location.pathname==='/vets') {
       vetsBtnColor = 'white';
       vetsColor = purple;
+    } else if(this.props.location.pathname==='/appts') {
+      apptsBtnColor = 'white';
+      apptsColor = purple;
     }
 
     const { classes } = this.props;
@@ -86,6 +95,7 @@ class NavBar_ extends Component {
             </Typography>
             <Button style={{'backgroundColor':petsBtnColor, 'color':petsColor}} onClick={this.onClickPets.bind(this)}>Pets</Button>
             <Button style={{'backgroundColor':vetsBtnColor, 'color':vetsColor}} onClick={this.onClickVets.bind(this)}>Vets</Button>
+            <Button style={{'backgroundColor':apptsBtnColor, 'color':apptsColor}} onClick={this.onClickAppts.bind(this)}>Appts</Button>
           </Toolbar>
         </AppBar>
       </div>
@@ -96,15 +106,11 @@ class NavBar_ extends Component {
 
 const mapStateToProps = state => {
   return {
-    view: state.view
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    // getAllPets: () => {
-    //   dispatch(getAllPets());
-    // }
   }
 };
 

@@ -22,3 +22,14 @@ export function getAllVetsApi() {
     .then(response =>response.json())
     .catch(error => {return error});
 }
+
+export function getAllAppsApi() {
+  return fetch(url+'/appointments', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}

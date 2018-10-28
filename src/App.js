@@ -6,6 +6,7 @@ import './styles/App.css';
 import VetsView from './components/VetsView';
 import PetsView from './components/PetsView';
 import NavBar from "./components/NavBar";
+import ApptsView from "./components/ApptsView";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route exact path="/" component={PetsView}/>
           <Route path="/pets" component={PetsView}/>
           <Route path="/vets" component={VetsView}/>
+          <Route path="/appts" component={ApptsView}/>
         </div>
       </Router>
     );

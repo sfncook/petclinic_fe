@@ -1,10 +1,11 @@
 
-import { RECVD_PETS, RECVD_VETS } from './actionTypes'
+import {RECVD_APPTS, RECVD_PETS, RECVD_VETS} from './actionTypes'
 
 
 const initialState = {
   pets: [],
   vets: [],
+  appts: [],
 }
 
 function petClinicReducer(state = initialState, action) {
@@ -17,6 +18,11 @@ function petClinicReducer(state = initialState, action) {
     case RECVD_VETS:
       return Object.assign({}, state, {
         vets: action.vets,
+      });
+
+    case RECVD_APPTS:
+      return Object.assign({}, state, {
+        appts: action.appts,
       });
 
     default:
