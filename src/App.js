@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo"/>
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
@@ -23,6 +23,34 @@ class App extends Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    fetch("http://localhost:8080/pets", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((response) =>response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch(error => {
+        return error;
+      });
+    // fetch('http://localhost:8080/pets', {
+    //   method: 'GET',
+    //   mode: 'no-cors',
+    //   headers: {'Content-Type': 'application/json'},
+    // })
+    //   .then(function (rsp) {
+    //     console.log('rsp:',rsp);
+    //   })
+    //   .catch(function (err) {
+    //     console.log('err:', err);
+    //   });
+  }
+
 }
 
 export default App;
