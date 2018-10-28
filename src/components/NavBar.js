@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import {withRouter} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -44,6 +45,21 @@ const styles = theme => ({
 class NavBar_ extends Component {
 
   render() {
+    console.log('this.props.location:',this.props.location);
+
+    const purple = '#3f51b5';
+    let petsBtnColor = purple;
+    let vetsBtnColor = purple;
+    let petsColor = 'white';
+    let vetsColor = 'white';
+    if(this.props.location.pathname==='/' || this.props.location.pathname==='/pets') {
+      petsBtnColor = 'white';
+      petsColor = purple;
+    } else if(this.props.location.pathname==='/vets') {
+      vetsBtnColor = 'white';
+      vetsColor = purple;
+    }
+
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -60,8 +76,8 @@ class NavBar_ extends Component {
             >
               Pet Clinic
             </Typography>
-            <Button color="inherit">Pets</Button>
-            <Button color="inherit">Vets</Button>
+            <Button style={{'backgroundColor':petsBtnColor, 'color':petsColor}}>Pets</Button>
+            <Button style={{'backgroundColor':vetsBtnColor, 'color':vetsColor}}>Vets</Button>
           </Toolbar>
         </AppBar>
       </div>
@@ -84,10 +100,10 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-const NavBar = connect(
+const NavBar = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(NavBar_);
+)(NavBar_));
 
 // export default App;
 export default withStyles(styles)(NavBar);
