@@ -4,11 +4,14 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {getAllPets} from "../stateHandlers/actions";
+
+const purple = '#3f51b5';
 
 const styles = theme => ({
   root: {
@@ -47,6 +50,9 @@ const styles = theme => ({
 
 class PetsView_ extends Component {
 
+  onClickAddNewPet = () => {
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -77,6 +83,9 @@ class PetsView_ extends Component {
                   })}
                 </TableBody>
               </Table>
+              <div style={{'textAlign':'left'}}>
+                <Button style={{'backgroundColor':purple, 'color':'white', 'marginLeft':'20px', 'marginTop':'10px'}} onClick={this.onClickAddNewPet.bind(this)}>+ Add New</Button>
+              </div>
             </div>
           </main>
         </div>
@@ -109,5 +118,4 @@ const PetsView = connect(
   mapDispatchToProps
 )(PetsView_);
 
-// export default App;
 export default withStyles(styles)(PetsView);
