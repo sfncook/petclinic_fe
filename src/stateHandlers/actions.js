@@ -1,7 +1,24 @@
-import { FETCH_PETS } from './actionTypes'
+import { FETCHING_PETS, RECVD_PETS } from './actionTypes'
+import {getAllPetsApi} from './api'
 
-function fetchPets() {
+export function fetchingPets() {
   return {
-    type: FETCH_PETS
+    type: FETCHING_PETS
+  }
+}
+
+export function receivedPets(petsJson) {
+  console.log('receivedPets petsJson:',petsJson);
+  return {
+    type: RECVD_PETS,
+    pets: petsJson,
+  }
+}
+
+export function getAllPets() {
+  return dispatch => {
+    dispatch(fetchingPets())
+    return getAllPetsApi()
+      .then(petsJson => dispatch(receivedPets(petsJson)))
   }
 }

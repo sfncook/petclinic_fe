@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import logo from './logo.svg';
 import './styles/App.css';
+import {getAllPets} from "./stateHandlers/actions";
 
-class App extends Component {
+class App_ extends Component {
   render() {
     return (
       <div className="App">
@@ -25,32 +27,41 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/pets", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then((response) =>response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch(error => {
-        return error;
-      });
-    // fetch('http://localhost:8080/pets', {
-    //   method: 'GET',
-    //   mode: 'no-cors',
-    //   headers: {'Content-Type': 'application/json'},
+    // fetch("http://localhost:8080/pets", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   }
     // })
-    //   .then(function (rsp) {
-    //     console.log('rsp:',rsp);
+    //   .then((response) =>response.json())
+    //   .then((data) => {
+    //     console.log(data);
     //   })
-    //   .catch(function (err) {
-    //     console.log('err:', err);
+    //   .catch(error => {
+    //     return error;
     //   });
+    this.props.getAllPets();
   }
 
 }
+
+const mapStateToProps = state => {
+  return {
+    pets: state.pets,
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllPets: () => {
+      dispatch(getAllPets());
+    }
+  }
+};
+
+const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App_);
 
 export default App;
