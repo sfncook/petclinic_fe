@@ -6,15 +6,17 @@ import './styles/App.css';
 import {getAllPets} from "./stateHandlers/actions";
 import Foo from './components/Foo';
 import PetsView from './components/PetsView';
+import NavBar from "./components/NavBar";
 
 class App_ extends Component {
   render() {
     return (
       <Router>
         <div>
-
-          <Route path="/" component={Foo} />
+          <NavBar/>
+          <Route exact path="/" component={PetsView} />
           <Route path="/pets" component={PetsView} />
+          <Route path="/foo" component={Foo} />
         </div>
       </Router>
     );
