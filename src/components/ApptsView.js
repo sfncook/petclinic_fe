@@ -8,6 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
 import {getAllAppts} from "../stateHandlers/actions";
 
 const styles = theme => ({
@@ -47,6 +48,24 @@ const styles = theme => ({
 
 class AptsView_ extends Component {
 
+  convertDateTime = (sqlDateTime) => {
+    const dateAndTime = sqlDateTime.split(' ');
+    const date = dateAndTime[0];
+    const yrMthDay = date.split('-');
+    const day = yrMthDay[0];
+    const mth = yrMthDay[1];
+    const year = yrMthDay[2];
+
+    const time = dateAndTime[1];
+    const hrMnSec = time.split(':');
+    const hour = hrMnSec[0];
+    const min = hrMnSec[1];
+
+    const str = year+'-'+mth+'-'+day+'T'+hour+':'+min;
+    console.log('datetime str:',str);
+    return str;
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -79,10 +98,30 @@ class AptsView_ extends Component {
                           {appt.vet.name}
                         </TableCell>
                         <TableCell component="th" scope="row">
-                          {appt.startTime}
+                          <TextField
+                            disabled={true}
+                            id="date"
+                            label="Birthday"
+                            type="datetime-local"
+                            defaultValue={this.convertDateTime(appt.startTime)}
+                            className={classes.textField}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
                         </TableCell>
                         <TableCell component="th" scope="row">
-                          {appt.endTime}
+                          <TextField
+                            disabled={true}
+                            id="date"
+                            label="Birthday"
+                            type="datetime-local"
+                            defaultValue={this.convertDateTime(appt.endTime)}
+                            className={classes.textField}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
                         </TableCell>
                       </TableRow>
                     );
