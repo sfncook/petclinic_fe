@@ -11,3 +11,14 @@ export function getAllPetsApi() {
     .then(response =>response.json())
     .catch(error => {return error});
 }
+
+export function getAllVetsApi() {
+  return fetch(url+'/vets', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}

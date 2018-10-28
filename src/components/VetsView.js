@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {getAllPets} from "../stateHandlers/actions";
+import {getAllVets} from "../stateHandlers/actions";
 
 const styles = theme => ({
   root: {
@@ -48,7 +45,7 @@ const styles = theme => ({
   },
 });
 
-class PetsView_ extends Component {
+class VetsView_ extends Component {
 
   render() {
     const { classes } = this.props;
@@ -69,11 +66,11 @@ class PetsView_ extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.props.pets.map(pet => {
+                  {this.props.vets.map(vet => {
                     return (
-                      <TableRow key={pet.id}>
+                      <TableRow key={vet.id}>
                         <TableCell component="th" scope="row">
-                          {pet.name}
+                          {vet.name}
                         </TableCell>
                       </TableRow>
                     );
@@ -88,29 +85,29 @@ class PetsView_ extends Component {
   }
 
   componentDidMount() {
-    this.props.getAllPets();
+    this.props.getAllVets();
   }
 
 }
 
 const mapStateToProps = state => {
   return {
-    pets: state.pets,
+    vets: state.vets,
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllPets: () => {
-      dispatch(getAllPets());
+    getAllVets: () => {
+      dispatch(getAllVets());
     }
   }
 };
 
-const PetsView = connect(
+const VetsView = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PetsView_);
+)(VetsView_);
 
 // export default App;
-export default withStyles(styles)(PetsView);
+export default withStyles(styles)(VetsView);

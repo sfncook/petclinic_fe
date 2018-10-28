@@ -1,5 +1,5 @@
-import { FETCHING_PETS, RECVD_PETS } from './actionTypes'
-import {getAllPetsApi} from './api'
+import { FETCHING_PETS, RECVD_PETS, FETCHING_VETS, RECVD_VETS } from './actionTypes'
+import { getAllPetsApi, getAllVetsApi } from './api'
 
 export function fetchingPets() {
   return {
@@ -19,5 +19,27 @@ export function getAllPets() {
     dispatch(fetchingPets())
     return getAllPetsApi()
       .then(petsJson => dispatch(receivedPets(petsJson)))
+  }
+}
+
+
+export function fetchingVets() {
+  return {
+    type: FETCHING_VETS
+  }
+}
+
+export function receivedVets(vetsJson) {
+  return {
+    type: RECVD_VETS,
+    vets: vetsJson,
+  }
+}
+
+export function getAllVets() {
+  return dispatch => {
+    dispatch(fetchingVets())
+    return getAllVetsApi()
+      .then(vetsJson => dispatch(receivedVets(vetsJson)))
   }
 }
