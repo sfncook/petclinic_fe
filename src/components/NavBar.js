@@ -44,6 +44,14 @@ const styles = theme => ({
 
 class NavBar_ extends Component {
 
+  onClickPets = () => {
+    this.props.history.push('/pets');
+  };
+
+  onClickVets = () => {
+    this.props.history.push('/vets');
+  };
+
   render() {
     console.log('this.props.location:',this.props.location);
 
@@ -76,8 +84,8 @@ class NavBar_ extends Component {
             >
               Pet Clinic
             </Typography>
-            <Button style={{'backgroundColor':petsBtnColor, 'color':petsColor}}>Pets</Button>
-            <Button style={{'backgroundColor':vetsBtnColor, 'color':vetsColor}}>Vets</Button>
+            <Button style={{'backgroundColor':petsBtnColor, 'color':petsColor}} onClick={this.onClickPets.bind(this)}>Pets</Button>
+            <Button style={{'backgroundColor':vetsBtnColor, 'color':vetsColor}} onClick={this.onClickVets.bind(this)}>Vets</Button>
           </Toolbar>
         </AppBar>
       </div>
