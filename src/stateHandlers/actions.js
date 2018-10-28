@@ -8,7 +8,6 @@ export function fetchingPets() {
 }
 
 export function receivedPets(petsJson) {
-  console.log('receivedPets petsJson:',petsJson);
   return {
     type: RECVD_PETS,
     pets: petsJson,

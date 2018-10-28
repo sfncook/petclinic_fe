@@ -1,5 +1,5 @@
 
-import {GET_ALL_PETS} from './actionTypes'
+import {GET_ALL_PETS, RECVD_PETS} from './actionTypes'
 
 
 const initialState = {
@@ -12,6 +12,10 @@ function petClinicReducer(state = initialState, action) {
     case GET_ALL_PETS:
       return Object.assign({}, state, {
         pets: [{'foo1':'bar1'}, {'foo2':'bar2'}],
+      });
+    case RECVD_PETS:
+      return Object.assign({}, state, {
+        pets: action.pets,
       });
     default:
       return state
