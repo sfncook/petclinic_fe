@@ -64,8 +64,8 @@ class AptsView_ extends Component {
                   <TableRow>
                     <TableCell>Pet</TableCell>
                     <TableCell>Vet</TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Time</TableCell>
+                    <TableCell>Start Date</TableCell>
+                    <TableCell>End Date</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -73,16 +73,16 @@ class AptsView_ extends Component {
                     return (
                       <TableRow key={appt.id}>
                         <TableCell component="th" scope="row">
-                          [pet name]
+                          {appt.pet.name}
                         </TableCell>
                         <TableCell component="th" scope="row">
-                          [vet name]
+                          {appt.vet.name}
                         </TableCell>
                         <TableCell component="th" scope="row">
-                          [appt date]
+                          {appt.startTime}
                         </TableCell>
                         <TableCell component="th" scope="row">
-                          [appt time]
+                          {appt.endTime}
                         </TableCell>
                       </TableRow>
                     );
