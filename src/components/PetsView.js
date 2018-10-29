@@ -95,9 +95,8 @@ class PetsView_ extends Component {
       petRows.push(
         <PetRow
           key={'createNewPetRow'}
-          pet={{}}
+          pet={{name:''}}
           createNewRow={true}
-          visible={this.state.creatingNewPet}
           handleSave={this.handleCreateNew}
           handleCancel={this.handleCancel}
         />

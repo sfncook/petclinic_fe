@@ -11,7 +11,6 @@ class PetRow extends Component {
 
   static defaultProps = {
     createNewRow: false,
-    visible: true,
     editing: false,
   };
 
@@ -69,31 +68,26 @@ class PetRow extends Component {
       }
     }
 
-    if(this.props.visible) {
-      return (
-        <TableRow>
-          <TableCell component="th" scope="row">
-            <TextField
-              style={{'backgroundColor': nameFieldBgColor}}
-              disabled={!(this.state.editing || this.props.createNewRow)}
-              id="pet-name"
-              value={this.state.pet.name}
-              onChange={this.handleChangeName}
-            />
-            {actionBtns}
-          </TableCell>
-        </TableRow>
-      );
-    } else {
-      return (<TableRow />);
-    }//else
+    return (
+      <TableRow>
+        <TableCell component="th" scope="row">
+          <TextField
+            style={{'backgroundColor': nameFieldBgColor}}
+            disabled={!(this.state.editing || this.props.createNewRow)}
+            id="pet-name"
+            value={this.state.pet.name}
+            onChange={this.handleChangeName}
+          />
+          {actionBtns}
+        </TableCell>
+      </TableRow>
+    );
   }// render()
 }
 
 PetRow.propTypes = {
   pet: PropTypes.object.isRequired,
   createNewRow: PropTypes.bool,
-  visible: PropTypes.bool,
   handleSave: PropTypes.func,
   handleCancel: PropTypes.func,
 
