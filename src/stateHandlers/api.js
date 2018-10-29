@@ -73,6 +73,32 @@ export function saveVetApi(vet) {
 
 
 // --- Appointments ---
+
+const convertDateTime = (jsDateTime) => {
+  // sample jsDateTime: "2018-10-28T08:00"
+  // sample sqlDateTime: "2018-10-28 00:00:00"
+  try {
+    // console.log('api.convertDateTime jsDateTime:',jsDateTime);
+    const dateAndTime = jsDateTime.split('T');
+    const date = dateAndTime[0];
+    const yrMthDay = date.split('-');
+    const year = yrMthDay[0];
+    const mth = yrMthDay[1];
+    const day = yrMthDay[2];
+
+    const time = dateAndTime[1];
+    const hrMnSec = time.split(':');
+    const hour = hrMnSec[0];
+    const min = hrMnSec[1];
+
+    const sqlDateTime = year+'-'+mth+'-'+day+' '+hour+':'+min+":00";
+    // console.log('api.datetime sqlDateTime:',sqlDateTime);
+    return sqlDateTime;
+  } catch(e) {
+    return jsDateTime;
+  }
+};
+
 export function getAllApptsApi() {
   return fetch(url+'/appointments', {
     method: 'GET',
@@ -84,6 +110,8 @@ export function getAllApptsApi() {
     .catch(error => {return error});
 }
 export function createNewApptApi(appt) {
+  appt.startTime = convertDateTime(appt.startTime);
+  appt.endTime = convertDateTime(appt.endTime);
   return fetch(url+'/appointments', {
     method: 'POST',
     body: JSON.stringify(appt),
@@ -95,6 +123,8 @@ export function createNewApptApi(appt) {
     .catch(error => {return error});
 }
 export function saveApptApi(appt) {
+  appt.startTime = convertDateTime(appt.startTime);
+  appt.endTime = convertDateTime(appt.endTime);
   return fetch(url+'/appointments', {
     method: 'PUT',
     body: JSON.stringify(appt),

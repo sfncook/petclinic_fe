@@ -12,29 +12,6 @@ const purple = '#3f51b5';
 
 class ApptRow extends Component {
 
-  static convertDateTime = (sqlDateTime) => {
-    try {
-      console.log('convertDateTime sqlDateTime:',sqlDateTime);
-      const dateAndTime = sqlDateTime.split(' ');
-      const date = dateAndTime[0];
-      const yrMthDay = date.split('-');
-      const day = yrMthDay[0];
-      const mth = yrMthDay[1];
-      const year = yrMthDay[2];
-
-      const time = dateAndTime[1];
-      const hrMnSec = time.split(':');
-      const hour = hrMnSec[0];
-      const min = hrMnSec[1];
-
-      const str = year+'-'+mth+'-'+day+'T'+hour+':'+min;
-      console.log('datetime str:',str);
-      return str;
-    } catch(e) {
-      return sqlDateTime;
-    }
-  };
-
   static defaultProps = {
     createNewRow: false,
     editing: false,
@@ -222,7 +199,7 @@ class ApptRow extends Component {
             label="Start Time"
             type="datetime-local"
             onChange={this.handleChangeStartTime}
-            defaultValue={ApptRow.convertDateTime(appt.startTime)}
+            defaultValue={appt.startTime}
             InputLabelProps={{
               shrink: true,
             }}
@@ -235,7 +212,7 @@ class ApptRow extends Component {
             label="End Time"
             type="datetime-local"
             onChange={this.handleChangeEndTime}
-            defaultValue={ApptRow.convertDateTime(appt.endTime)}
+            defaultValue={appt.endTime}
             InputLabelProps={{
               shrink: true,
             }}
