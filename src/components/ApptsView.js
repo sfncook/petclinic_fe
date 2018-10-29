@@ -97,7 +97,7 @@ class ApptsView_ extends Component {
       apptRows.push(
         <ApptRow
           key={'createNewApptRow'}
-          appt={{name:''}}
+          appt={{pet:{id:0,name:''},vet:{id:0,name:''},startTime:"29-10-2018 12:00:00",endTime:"29-10-2018 12:00:00"}}
           createNewRow={true}
           handleSave={this.handleCreateNew}
           handleCancel={this.handleCancel}
