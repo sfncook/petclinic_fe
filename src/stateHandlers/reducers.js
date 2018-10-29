@@ -13,7 +13,7 @@ const convertDateTime = (sqlDateTime) => {
   // sample jsDateTime: "2018-10-28T08:00"
   // sample sqlDateTime: "2018-10-28 00:00:00"
   try {
-    // console.log('convertDateTime sqlDateTime:',sqlDateTime);
+    // console.log('reducers convertDateTime sqlDateTime:',sqlDateTime);
     const dateAndTime = sqlDateTime.split(' ');
     const date = dateAndTime[0];
     const yrMthDay = date.split('-');
@@ -27,7 +27,7 @@ const convertDateTime = (sqlDateTime) => {
     const min = hrMnSec[1];
 
     const jsDateTime = year+'-'+mth+'-'+day+'T'+hour+':'+min;
-    // console.log('datetime str:',str);
+    // console.log('reducers convertDateTime jsDateTime:',jsDateTime);
     return jsDateTime;
   } catch(e) {
     return sqlDateTime;
