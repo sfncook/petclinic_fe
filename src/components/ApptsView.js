@@ -125,7 +125,10 @@ class ApptsView_ extends Component {
               <Table className={classes.table}>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
+                    <TableCell>Pet</TableCell>
+                    <TableCell>Vet</TableCell>
+                    <TableCell>Start Time</TableCell>
+                    <TableCell>End Time</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

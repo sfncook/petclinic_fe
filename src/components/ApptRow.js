@@ -196,7 +196,6 @@ class ApptRow extends Component {
           <TextField
             disabled={!(this.state.editing || this.props.createNewRow)}
             id="date"
-            label="Start Time"
             type="datetime-local"
             onChange={this.handleChangeStartTime}
             defaultValue={appt.startTime}
@@ -209,7 +208,6 @@ class ApptRow extends Component {
           <TextField
             disabled={!(this.state.editing || this.props.createNewRow)}
             id="date"
-            label="End Time"
             type="datetime-local"
             onChange={this.handleChangeEndTime}
             defaultValue={appt.endTime}
