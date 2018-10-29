@@ -75,7 +75,7 @@ class PetsView_ extends Component {
                 <TableBody>
                   {this.props.pets.map(pet => {
                     return (
-                      <PetRow key={pet.id} pet={pet} editable={true} />
+                      <PetRow key={pet.id} pet={pet} createNewRow={false} />
                     );
                   })}
                 </TableBody>
