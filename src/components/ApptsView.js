@@ -4,12 +4,15 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField';
-import {getAllAppts} from "../stateHandlers/actions";
+import { getAllAppts, createNewAppt, saveAppt } from "../stateHandlers/actions";
+import ApptRow from './ApptRow';
+
+const purple = '#3f51b5';
 
 const styles = theme => ({
   root: {
@@ -46,28 +49,60 @@ const styles = theme => ({
   },
 });
 
-class AptsView_ extends Component {
+class ApptsView_ extends Component {
 
-  convertDateTime = (sqlDateTime) => {
-    const dateAndTime = sqlDateTime.split(' ');
-    const date = dateAndTime[0];
-    const yrMthDay = date.split('-');
-    const day = yrMthDay[0];
-    const mth = yrMthDay[1];
-    const year = yrMthDay[2];
-
-    const time = dateAndTime[1];
-    const hrMnSec = time.split(':');
-    const hour = hrMnSec[0];
-    const min = hrMnSec[1];
-
-    const str = year+'-'+mth+'-'+day+'T'+hour+':'+min;
-    console.log('datetime str:',str);
-    return str;
+  onClickAddNewAppt = () => {
+    this.setState({creatingNewAppt:true});
   };
+  handleSave = (appt) => {
+    this.setState({creatingNewAppt:false});
+    this.props.saveAppt(appt);
+  };
+  handleCancel = (appt) => {
+    this.setState({creatingNewAppt:false});
+  };
+  handleCreateNew = (appt) => {
+    this.setState({creatingNewAppt:false});
+    this.props.createNewAppt(appt);
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      creatingNewAppt: false,
+    };
+    this.handleSave = this.handleSave.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleCreateNew = this.handleCreateNew.bind(this);
+  }
 
   render() {
     const { classes } = this.props;
+
+    let apptRows = this.props.appts.map(appt => {
+      return (
+        <ApptRow
+          key={appt.id}
+          appt={appt}
+          createNewRow={false}
+          handleSave={this.handleSave}
+          handleCancel={this.handleCancel}
+        />
+      );
+    });
+
+    if(this.state.creatingNewAppt) {
+      apptRows.push(
+        <ApptRow
+          key={'createNewApptRow'}
+          appt={{name:''}}
+          createNewRow={true}
+          handleSave={this.handleCreateNew}
+          handleCancel={this.handleCancel}
+        />
+      );
+    }
+
     return (
       <div className="App">
         <CssBaseline />
@@ -75,59 +110,24 @@ class AptsView_ extends Component {
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Typography variant="h4" gutterBottom component="h2">
-              Appointments
+              Appts
             </Typography>
             <div className={classes.tableContainer}>
               <Table className={classes.table}>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Pet</TableCell>
-                    <TableCell>Vet</TableCell>
-                    <TableCell>Start Date</TableCell>
-                    <TableCell>End Date</TableCell>
+                    <TableCell>Name</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.props.appts.map(appt => {
-                    return (
-                      <TableRow key={appt.id}>
-                        <TableCell component="th" scope="row">
-                          {appt.pet.name}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          {appt.vet.name}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          <TextField
-                            disabled={true}
-                            id="date"
-                            label="Birthday"
-                            type="datetime-local"
-                            defaultValue={this.convertDateTime(appt.startTime)}
-                            className={classes.textField}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                          />
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          <TextField
-                            disabled={true}
-                            id="date"
-                            label="Birthday"
-                            type="datetime-local"
-                            defaultValue={this.convertDateTime(appt.endTime)}
-                            className={classes.textField}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {apptRows}
                 </TableBody>
               </Table>
+              <div hidden={this.state.creatingNewAppt} style={{'textAlign':'left'}}>
+                <Button
+                  style={{'backgroundColor': purple, 'color': 'white', 'marginLeft': '20px', 'marginTop': '10px'}}
+                  onClick={this.onClickAddNewAppt.bind(this)}>+ Add New</Button>
+              </div>
             </div>
           </main>
         </div>
@@ -149,16 +149,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllAppts: () => {
-      dispatch(getAllAppts());
-    }
+    getAllAppts: () => {dispatch(getAllAppts())},
+    createNewAppt: (appt) => {dispatch(createNewAppt(appt))},
+    saveAppt: (appt) => {dispatch(saveAppt(appt))},
   }
 };
 
-const AptsView = connect(
+const ApptsView = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AptsView_);
+)(ApptsView_);
 
-// export default App;
-export default withStyles(styles)(AptsView);
+export default withStyles(styles)(ApptsView);
