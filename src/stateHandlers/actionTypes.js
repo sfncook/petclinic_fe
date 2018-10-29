@@ -7,3 +7,4 @@ export const RECVD_VETS = 'RECVD_VETS';
 
 export const FETCHING_APPTS = 'FETCHING_APPTS';
 export const RECVD_APPTS = 'RECVD_APPTS';
+export const ERR_SAVING_APPT = 'ERR_SAVING_APPT';

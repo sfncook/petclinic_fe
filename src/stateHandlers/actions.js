@@ -1,4 +1,4 @@
-import {FETCHING_PETS, RECVD_PETS, FETCHING_VETS, RECVD_VETS, FETCHING_APPTS, RECVD_APPTS} from './actionTypes'
+import { FETCHING_PETS, RECVD_PETS, FETCHING_VETS, RECVD_VETS, FETCHING_APPTS, RECVD_APPTS, ERR_SAVING_APPT } from './actionTypes'
 import {
   getAllPetsApi, getAllVetsApi, getAllApptsApi,
   createNewPetApi, savePetApi, createNewVetApi,
@@ -97,9 +97,16 @@ export function fetchingAppts() {
   }
 }
 export function receivedAppts(apptsJson) {
+  console.log('receivedAppts apptsJson:',apptsJson);
   return {
     type: RECVD_APPTS,
     appts: apptsJson,
+  }
+}
+export function errorSavingAppt(errSavingApptMsg) {
+  return {
+    type: ERR_SAVING_APPT,
+    errSavingApptMsg: errSavingApptMsg,
   }
 }
 export function getAllAppts() {
@@ -116,6 +123,10 @@ export function createNewAppt(appt) {
       .then(()=> {
         return getAllApptsApi()
           .then(apptsJson => dispatch(receivedAppts(apptsJson)))
+      }).catch(e=>{
+        dispatch(errorSavingAppt(e));
+        return getAllApptsApi()
+          .then(apptsJson => dispatch(receivedAppts(apptsJson)))
       })
   }
 }
@@ -124,6 +135,11 @@ export function saveAppt(appt) {
     dispatch(fetchingAppts());
     return saveApptApi(appt)
       .then(()=> {
+        return getAllApptsApi()
+          .then(apptsJson => dispatch(receivedAppts(apptsJson)))
+      })
+      .catch(e=>{
+        dispatch(errorSavingAppt(e));
         return getAllApptsApi()
           .then(apptsJson => dispatch(receivedAppts(apptsJson)))
       })

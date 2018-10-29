@@ -56,7 +56,7 @@ class ApptRow extends Component {
     });
   };
   handleChangeStartTime(event) {
-    console.log('handleChangeStartTime event.target.value:',event.target.value);
+    // console.log('handleChangeStartTime event.target.value:',event.target.value);
     const newApptState = Object.assign({}, this.state.appt, {
       startTime: event.target.value,
     });
@@ -65,7 +65,7 @@ class ApptRow extends Component {
     });
   };
   handleChangeEndTime(event) {
-    console.log('log event.target.value:',event.target.value);
+    // console.log('log event.target.value:',event.target.value);
     const newApptState = Object.assign({}, this.state.appt, {
       endTime: event.target.value,
     });

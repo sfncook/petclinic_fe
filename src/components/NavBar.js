@@ -57,6 +57,11 @@ class NavBar_ extends Component {
   };
 
   render() {
+
+    if(this.props.errSavingApptMsg.length>0) {
+      console.log('NavBar err:', this.props.errSavingApptMsg);
+    }
+
     const purple = '#3f51b5';
     let petsBtnColor = purple;
     let vetsBtnColor = purple;
@@ -104,6 +109,7 @@ class NavBar_ extends Component {
 
 const mapStateToProps = state => {
   return {
+    errSavingApptMsg: state.errSavingApptMsg,
   }
 };
 

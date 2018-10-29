@@ -76,7 +76,7 @@ export function saveVetApi(vet) {
 
 const convertDateTime = (jsDateTime) => {
   // sample jsDateTime: "2018-10-28T08:00"
-  // sample sqlDateTime: "2018-10-28 00:00:00"
+  // sample sqlDateTime: "dd-MM-yyyy hh:mm:ss"
   try {
     // console.log('api.convertDateTime jsDateTime:',jsDateTime);
     const dateAndTime = jsDateTime.split('T');
@@ -91,7 +91,7 @@ const convertDateTime = (jsDateTime) => {
     const hour = hrMnSec[0];
     const min = hrMnSec[1];
 
-    const sqlDateTime = year+'-'+mth+'-'+day+' '+hour+':'+min+":00";
+    const sqlDateTime = day+'-'+mth+'-'+year+' '+hour+':'+min+":00";
     // console.log('api.datetime sqlDateTime:',sqlDateTime);
     return sqlDateTime;
   } catch(e) {
@@ -119,8 +119,14 @@ export function createNewApptApi(appt) {
       'Content-Type': 'application/json'
     }
   })
-    .then(response =>response.json())
-    .catch(error => {return error});
+    .then(response =>{
+      if(response.status===200) {
+        return response.json();
+      } else {
+        return Promise.reject("Was not able to save appointment.");
+      }
+    })
+    .catch(error => {throw error;});
 }
 export function saveApptApi(appt) {
   appt.startTime = convertDateTime(appt.startTime);
@@ -132,8 +138,14 @@ export function saveApptApi(appt) {
       'Content-Type': 'application/json'
     },
   })
-    .then(response =>response.json())
-    .catch(error => {return error});
+    .then(response =>{
+      if(response.status===200) {
+        return response.json();
+      } else {
+        return Promise.reject("Was not able to save appointment.");
+      }
+    })
+    .catch(error => {throw error;});
 }
 export function deleteApptApi(appt) {
   return fetch(url+'/appointments', {

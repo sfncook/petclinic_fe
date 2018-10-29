@@ -1,11 +1,12 @@
 
-import {RECVD_APPTS, RECVD_PETS, RECVD_VETS} from './actionTypes'
+import {ERR_SAVING_APPT, RECVD_APPTS, RECVD_PETS, RECVD_VETS} from './actionTypes'
 
 
 const initialState = {
   pets: [],
   vets: [],
   appts: [],
+  errSavingApptMsg: '',
 };
 
 const convertDateTime = (sqlDateTime) => {
@@ -43,6 +44,11 @@ function petClinicReducer(state = initialState, action) {
     case RECVD_VETS:
       return Object.assign({}, state, {
         vets: action.vets,
+      });
+
+    case ERR_SAVING_APPT:
+      return Object.assign({}, state, {
+        errSavingApptMsg: action.errSavingApptMsg,
       });
 
     case RECVD_APPTS:
