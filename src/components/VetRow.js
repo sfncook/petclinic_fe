@@ -15,8 +15,9 @@ class VetRow extends Component {
   };
 
   handleChangeName(event) {
+    const newVetState = Object.assign({}, this.state.vet, {name:event.target.value});
     this.setState({
-      vet: {name:event.target.value},
+      vet: newVetState,
     });
   };
   handleSave() {
@@ -24,14 +25,19 @@ class VetRow extends Component {
     this.props.handleSave(this.state.vet);
   };
   handleCancel() {
-    console.log('editingName:',this.state.editingName);
-    this.setState({editing:false});
-    this.setState({vet:{name:this.state.editingName}});
+    const newState = Object.assign({}, this.state, {
+      vet: this.state.editingVet,
+      editing:false,
+    });
+    this.setState(newState);
     this.props.handleCancel();
   };
   handleEdit() {
-    this.setState({editing:true});
-    this.setState({editingName:this.state.vet.name});
+    const newState = Object.assign({}, this.state, {
+      editingVet: this.state.vet,
+      editing:true
+    });
+    this.setState(newState);
   };
 
   constructor(props) {
