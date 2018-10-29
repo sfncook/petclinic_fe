@@ -36,9 +36,22 @@ class ApptRow extends Component {
     vets: [],
   };
 
-  handleChangeName(event) {
+  findPetById(petId) {
+    let pet;
+    for(pet of this.props.pets) {
+      if(pet.id===petId) {
+        return pet;
+      }
+    }
+    return {};
+  }
+  handleChangePet(event) {
+    const chosenPet = this.findPetById(event.target.value);
+    const newApptState = Object.assign({}, this.state.appt, {
+      pet: chosenPet,
+    });
     this.setState({
-      appt: {name:event.target.value},
+      appt: newApptState,
     });
   };
   handleSave() {
@@ -66,10 +79,11 @@ class ApptRow extends Component {
     this.state = {
       appt: props.appt,
     };
-    this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleChangePet = this.handleChangePet.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.findPetById = this.findPetById.bind(this);
   }
 
   render() {
@@ -108,7 +122,7 @@ class ApptRow extends Component {
         <TableCell component="th" scope="row">
           <Select
             value={this.state.appt.pet.id}
-            onChange={this.handleChange}
+            onChange={this.handleChangePet}
             inputProps={{
               name: 'appt-pet-select',
               id: 'appt-pet-select',
