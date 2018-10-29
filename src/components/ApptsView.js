@@ -87,6 +87,8 @@ class ApptsView_ extends Component {
           createNewRow={false}
           handleSave={this.handleSave}
           handleCancel={this.handleCancel}
+          pets={this.props.pets}
+          vets={this.props.vets}
         />
       );
     });
@@ -99,6 +101,8 @@ class ApptsView_ extends Component {
           createNewRow={true}
           handleSave={this.handleCreateNew}
           handleCancel={this.handleCancel}
+          pets={this.props.pets}
+          vets={this.props.vets}
         />
       );
     }
@@ -143,6 +147,8 @@ class ApptsView_ extends Component {
 
 const mapStateToProps = state => {
   return {
+    pets: state.pets,
+    vets: state.vets,
     appts: state.appts,
   }
 };

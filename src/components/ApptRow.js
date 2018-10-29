@@ -4,6 +4,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button/Button";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const purple = '#3f51b5';
 
@@ -30,6 +32,8 @@ class ApptRow extends Component {
   static defaultProps = {
     createNewRow: false,
     editing: false,
+    pets: [],
+    vets: [],
   };
 
   handleChangeName(event) {
@@ -93,10 +97,25 @@ class ApptRow extends Component {
       }
     }
 
+    let petMenuItems = this.props.pets.map(pet => {
+      return (
+        <MenuItem key={pet.id} value={pet.id}>{pet.name}</MenuItem>
+      );
+    });
+
     return (
       <TableRow>
         <TableCell component="th" scope="row">
-          {appt.pet.name}
+          <Select
+            value={this.state.appt.pet.id}
+            onChange={this.handleChange}
+            inputProps={{
+              name: 'appt-pet-select',
+              id: 'appt-pet-select',
+            }}
+          >
+            {petMenuItems}
+          </Select>
         </TableCell>
         <TableCell component="th" scope="row">
           {appt.vet.name}
@@ -132,6 +151,8 @@ class ApptRow extends Component {
 }
 
 ApptRow.propTypes = {
+  pets: PropTypes.array,
+  vets: PropTypes.array,
   appt: PropTypes.object.isRequired,
   createNewRow: PropTypes.bool,
   handleSave: PropTypes.func,
