@@ -25,11 +25,14 @@ class PetRow extends Component {
     this.props.handleSave(this.state.pet);
   };
   handleCancel() {
+    console.log('editingName:',this.state.editingName);
     this.setState({editing:false});
+    this.setState({pet:{name:this.state.editingName}});
     this.props.handleCancel();
   };
   handleEdit() {
     this.setState({editing:true});
+    this.setState({editingName:this.state.pet.name});
   };
 
   constructor(props) {
@@ -74,7 +77,7 @@ class PetRow extends Component {
               style={{'backgroundColor': nameFieldBgColor}}
               disabled={!(this.state.editing || this.props.createNewRow)}
               id="pet-name"
-              defaultValue={this.props.pet.name}
+              value={this.state.pet.name}
               onChange={this.handleChangeName}
             />
             {actionBtns}
