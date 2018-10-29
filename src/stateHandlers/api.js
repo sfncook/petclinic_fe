@@ -31,7 +31,6 @@ export function savePetApi(pet) {
     headers: {
       'Content-Type': 'application/json'
     },
-    mode: 'no-cors'
   })
     .then(response =>response.json())
     .catch(error => {return error});

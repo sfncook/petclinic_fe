@@ -15,8 +15,9 @@ class PetRow extends Component {
   };
 
   handleChangeName(event) {
+    const newPetState = Object.assign({}, this.state.pet, {name:event.target.value});
     this.setState({
-      pet: {name:event.target.value},
+      pet: newPetState,
     });
   };
   handleSave() {
@@ -24,14 +25,19 @@ class PetRow extends Component {
     this.props.handleSave(this.state.pet);
   };
   handleCancel() {
-    console.log('editingName:',this.state.editingName);
-    this.setState({editing:false});
-    this.setState({pet:{name:this.state.editingName}});
+    const newState = Object.assign({}, this.state, {
+      pet: this.state.editingPet,
+      editing:false,
+    });
+    this.setState(newState);
     this.props.handleCancel();
   };
   handleEdit() {
-    this.setState({editing:true});
-    this.setState({editingName:this.state.pet.name});
+    const newState = Object.assign({}, this.state, {
+      editingPet: this.state.pet,
+      editing:true
+    });
+    this.setState(newState);
   };
 
   constructor(props) {
