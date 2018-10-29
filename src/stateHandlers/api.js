@@ -11,6 +11,19 @@ export function getAllPetsApi() {
     .then(response =>response.json())
     .catch(error => {return error});
 }
+export function createNewPetApi(pet) {
+  console.log('api createNewPetApi:', pet);
+
+  return fetch(url+'/pets', {
+    method: 'POST',
+    body: JSON.stringify(pet),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}
 
 export function getAllVetsApi() {
   return fetch(url+'/vets', {

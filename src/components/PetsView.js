@@ -9,7 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {getAllPets} from "../stateHandlers/actions";
+import {getAllPets, createNewPet} from "../stateHandlers/actions";
 import PetRow from './PetRow';
 
 const purple = '#3f51b5';
@@ -51,28 +51,60 @@ const styles = theme => ({
 
 class PetsView_ extends Component {
 
+  onClickAddNewPet = () => {
+    this.setState({creatingNewPet:true});
+  };
+  handleSave = (pet) => {
+    this.setState({creatingNewPet:false});
+    // this.props.createNewPet(pet);
+  };onClickCancel
+  handleCancel = (pet) => {
+    this.setState({creatingNewPet:false});
+    this.props.createNewPet(pet);
+  };
+  handleCreateNew = (pet) => {
+    this.setState({creatingNewPet:false});
+    this.props.createNewPet(pet);
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       creatingNewPet: false,
     };
+    this.handleSave = this.handleSave.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleCreateNew = this.handleCreateNew.bind(this);
   }
-
-  onClickAddNewPet = () => {
-    this.setState({creatingNewPet:true});
-  };
-
-  onClickCancel = () => {
-    this.setState({creatingNewPet:false});
-  };
-
-  onClickSave = () => {
-    this.setState({creatingNewPet:false});
-    //TODO: dispatch save action
-  };
 
   render() {
     const { classes } = this.props;
+
+    let petRows = this.props.pets.map(pet => {
+      return (
+        <PetRow
+          key={pet.id}
+          pet={pet}
+          createNewRow={false}
+          handleSave={this.handleSave}
+          handleCancel={this.handleCancel}
+        />
+      );
+    });
+
+    if(this.state.creatingNewPet) {
+      petRows.push(
+        <PetRow
+          key={'createNewPetRow'}
+          pet={{}}
+          createNewRow={true}
+          visible={this.state.creatingNewPet}
+          handleSave={this.handleCreateNew}
+          handleCancel={this.handleCancel}
+        />
+      );
+    }
+
     return (
       <div className="App">
         <CssBaseline />
@@ -90,25 +122,13 @@ class PetsView_ extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.props.pets.map(pet => {
-                    return (
-                      <PetRow key={pet.id} pet={pet} createNewRow={false} />
-                    );
-                  })}
-                  <PetRow key={'createNewPetRow'} pet={{}} createNewRow={true} visible={this.state.creatingNewPet} />
+                  {petRows}
                 </TableBody>
               </Table>
               <div style={{'textAlign':'left'}}>
-                {this.state.creatingNewPet ?
-                  <div>
-                    <Button onClick={this.onClickCancel.bind(this)}>Cancel</Button>
-                    <Button style={{'backgroundColor':purple, 'color':'white'}} onClick={this.onClickSave.bind(this)}>Save</Button>
-                  </div>
-                  :
-                  <Button
-                    style={{'backgroundColor': purple, 'color': 'white', 'marginLeft': '20px', 'marginTop': '10px'}}
-                    onClick={this.onClickAddNewPet.bind(this)}>+ Add New</Button>
-                }
+                <Button
+                  style={{'backgroundColor': purple, 'color': 'white', 'marginLeft': '20px', 'marginTop': '10px'}}
+                  onClick={this.onClickAddNewPet.bind(this)}>+ Add New</Button>
               </div>
             </div>
           </main>
@@ -131,9 +151,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllPets: () => {
-      dispatch(getAllPets());
-    }
+    getAllPets: () => {dispatch(getAllPets())},
+    createNewPet: (pet) => {dispatch(createNewPet(pet))},
   }
 };
 

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
+import Button from "@material-ui/core/Button/Button";
 
-// const purple = '#3f51b5';
+const purple = '#3f51b5';
 
 class PetRow extends Component {
 
@@ -13,19 +14,28 @@ class PetRow extends Component {
     visible: true,
   };
 
+  handleChangeName(event) {
+    this.setState({
+      pet: {name:event.target.value},
+    });
+  };
+  handleSave() {
+    this.props.handleSave(this.state.pet);
+  };
+  handleCancel() {
+    this.props.handleCancel();
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      name: props.pet.name,
+      pet: props.pet,
       editing: false,
     };
+    this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
-
-  handleChangeName(event) {
-    this.setState({
-      name: event.target.value,
-    });
-  };
 
   render() {
     let bgColor = (this.state.editing || this.props.createNewRow) ? 'lightgreen' : 'inherit';
@@ -38,13 +48,21 @@ class PetRow extends Component {
               disabled={!(this.state.editing || this.props.createNewRow)}
               id="pet-name"
               defaultValue={this.props.pet.name}
-              onChange={this.handleChangeName.bind(this)}
+              onChange={this.handleChangeName}
             />
+            {(this.state.editing || this.props.createNewRow) ?
+              <span>
+                <Button onClick={this.handleCancel}>Cancel</Button>
+                <Button style={{'backgroundColor':purple, 'color':'white'}} onClick={this.handleSave}>Save</Button>
+              </span>
+              :
+              <span/>
+            }
           </TableCell>
         </TableRow>
       );
     } else {
-      return (<div />);
+      return (<TableRow />);
     }//else
   }// render()
 }
@@ -53,6 +71,9 @@ PetRow.propTypes = {
   pet: PropTypes.object.isRequired,
   createNewRow: PropTypes.bool,
   visible: PropTypes.bool,
+  handleSave: PropTypes.func,
+  handleCancel: PropTypes.func,
+
 };
 
 export default PetRow;
