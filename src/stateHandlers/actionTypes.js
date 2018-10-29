@@ -1,7 +1,6 @@
 
 export const FETCHING_PETS = 'FETCHING_PETS';
 export const RECVD_PETS = 'RECVD_PETS';
-export const CREATE_NEW_PET = 'CREATE_NEW_PET';
 
 export const FETCHING_VETS = 'FETCHING_VETS';
 export const RECVD_VETS = 'RECVD_VETS';

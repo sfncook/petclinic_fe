@@ -1,6 +1,8 @@
 import {FETCHING_PETS, RECVD_PETS, FETCHING_VETS, RECVD_VETS, FETCHING_APPTS, RECVD_APPTS} from './actionTypes'
-import { getAllPetsApi, getAllVetsApi, getAllApptsApi, createNewPetApi, savePetApi } from './api'
+import { getAllPetsApi, getAllVetsApi, getAllApptsApi, createNewPetApi, savePetApi, createNewVetApi, saveVetApi } from './api'
 
+
+// --- Pets ---
 export function fetchingPets() {
   return {
     type: FETCHING_PETS
@@ -41,6 +43,7 @@ export function savePet(pet) {
 }
 
 
+// --- Vets ---
 export function fetchingVets() {
   return {
     type: FETCHING_VETS
@@ -59,9 +62,30 @@ export function getAllVets() {
       .then(vetsJson => dispatch(receivedVets(vetsJson)))
   }
 }
+export function createNewVet(vet) {
+  return dispatch => {
+    dispatch(fetchingVets())
+    return createNewVetApi(vet)
+      .then(()=> {
+        return getAllVetsApi()
+          .then(vetsJson => dispatch(receivedVets(vetsJson)))
+      })
+  }
+}
+export function saveVet(vet) {
+  return dispatch => {
+    dispatch(fetchingVets())
+    return saveVetApi(vet)
+      .then(()=> {
+        return getAllVetsApi()
+          .then(vetsJson => dispatch(receivedVets(vetsJson)))
+      })
+  }
+}
 
 
 
+// --- Appointments ---
 export function fetchingAppts() {
   return {
     type: FETCHING_APPTS

@@ -4,11 +4,15 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {getAllVets} from "../stateHandlers/actions";
+import { getAllVets, createNewVet, saveVet } from "../stateHandlers/actions";
+import VetRow from './VetRow';
+
+const purple = '#3f51b5';
 
 const styles = theme => ({
   root: {
@@ -47,8 +51,58 @@ const styles = theme => ({
 
 class VetsView_ extends Component {
 
+  onClickAddNewVet = () => {
+    this.setState({creatingNewVet:true});
+  };
+  handleSave = (vet) => {
+    this.setState({creatingNewVet:false});
+    this.props.saveVet(vet);
+  };
+  handleCancel = (vet) => {
+    this.setState({creatingNewVet:false});
+  };
+  handleCreateNew = (vet) => {
+    this.setState({creatingNewVet:false});
+    this.props.createNewVet(vet);
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      creatingNewVet: false,
+    };
+    this.handleSave = this.handleSave.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleCreateNew = this.handleCreateNew.bind(this);
+  }
+
   render() {
     const { classes } = this.props;
+
+    let vetRows = this.props.vets.map(vet => {
+      return (
+        <VetRow
+          key={vet.id}
+          vet={vet}
+          createNewRow={false}
+          handleSave={this.handleSave}
+          handleCancel={this.handleCancel}
+        />
+      );
+    });
+
+    if(this.state.creatingNewVet) {
+      vetRows.push(
+        <VetRow
+          key={'createNewVetRow'}
+          vet={{name:''}}
+          createNewRow={true}
+          handleSave={this.handleCreateNew}
+          handleCancel={this.handleCancel}
+        />
+      );
+    }
+
     return (
       <div className="App">
         <CssBaseline />
@@ -66,17 +120,14 @@ class VetsView_ extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.props.vets.map(vet => {
-                    return (
-                      <TableRow key={vet.id}>
-                        <TableCell component="th" scope="row">
-                          {vet.name}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {vetRows}
                 </TableBody>
               </Table>
+              <div hidden={this.state.creatingNewVet} style={{'textAlign':'left'}}>
+                <Button
+                  style={{'backgroundColor': purple, 'color': 'white', 'marginLeft': '20px', 'marginTop': '10px'}}
+                  onClick={this.onClickAddNewVet.bind(this)}>+ Add New</Button>
+              </div>
             </div>
           </main>
         </div>
@@ -98,9 +149,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllVets: () => {
-      dispatch(getAllVets());
-    }
+    getAllVets: () => {dispatch(getAllVets())},
+    createNewVet: (vet) => {dispatch(createNewVet(vet))},
+    saveVet: (vet) => {dispatch(saveVet(vet))},
   }
 };
 
@@ -109,5 +160,4 @@ const VetsView = connect(
   mapDispatchToProps
 )(VetsView_);
 
-// export default App;
 export default withStyles(styles)(VetsView);

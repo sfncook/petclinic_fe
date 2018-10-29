@@ -2,7 +2,7 @@
 const url = 'http://localhost:8080';
 
 
-// --- Pets---
+// --- Pets ---
 export function getAllPetsApi() {
   return fetch(url+'/pets', {
     method: 'GET',
@@ -45,6 +45,29 @@ export function getAllVetsApi() {
     headers: {
       'Content-Type': 'application/json'
     }
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}
+export function createNewVetApi(vet) {
+  return fetch(url+'/vets', {
+    method: 'POST',
+    body: JSON.stringify(vet),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}
+export function saveVetApi(vet) {
+  console.log('api saveVetApi vet:',vet);
+  return fetch(url+'/vets', {
+    method: 'PUT',
+    body: JSON.stringify(vet),
+    headers: {
+      'Content-Type': 'application/json'
+    },
   })
     .then(response =>response.json())
     .catch(error => {return error});
