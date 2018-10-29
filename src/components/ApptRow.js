@@ -123,6 +123,7 @@ class ApptRow extends Component {
           <Select
             value={this.state.appt.pet.id}
             onChange={this.handleChangePet}
+            disabled={!(this.state.editing || this.props.createNewRow)}
             inputProps={{
               name: 'appt-pet-select',
               id: 'appt-pet-select',

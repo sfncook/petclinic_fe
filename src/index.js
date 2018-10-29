@@ -1,5 +1,5 @@
 import thunkMiddleware from 'redux-thunk'
-import { createLogger } from 'redux-logger'
+// import { createLogger } from 'redux-logger'
 import React from 'react';
 import { render } from 'react-dom'
 import './styles/index.css';
@@ -10,12 +10,12 @@ import { createStore, applyMiddleware } from 'redux';
 import petClinicReducer from './stateHandlers/reducers';
 import {getAllVets, getAllPets, getAllAppts} from './stateHandlers/actions'
 
-const loggerMiddleware = createLogger();
+// const loggerMiddleware = createLogger();
 
 const store = createStore(petClinicReducer,
   applyMiddleware(
     thunkMiddleware,
-    loggerMiddleware
+    // loggerMiddleware
   ));
 
 render(
