@@ -1,6 +1,8 @@
 
 const url = 'http://localhost:8080';
 
+
+// --- Pets---
 export function getAllPetsApi() {
   return fetch(url+'/pets', {
     method: 'GET',
@@ -12,8 +14,6 @@ export function getAllPetsApi() {
     .catch(error => {return error});
 }
 export function createNewPetApi(pet) {
-  console.log('api createNewPetApi:', pet);
-
   return fetch(url+'/pets', {
     method: 'POST',
     body: JSON.stringify(pet),
@@ -24,7 +24,21 @@ export function createNewPetApi(pet) {
     .then(response =>response.json())
     .catch(error => {return error});
 }
+export function savePetApi(pet) {
+  return fetch(url+'/pets', {
+    method: 'PUT',
+    body: JSON.stringify(pet),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    mode: 'no-cors'
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}
 
+
+// --- Vets ---
 export function getAllVetsApi() {
   return fetch(url+'/vets', {
     method: 'GET',
@@ -36,7 +50,9 @@ export function getAllVetsApi() {
     .catch(error => {return error});
 }
 
-export function getAllAppsApi() {
+
+// --- Appointments ---
+export function getAllApptsApi() {
   return fetch(url+'/appointments', {
     method: 'GET',
     headers: {
