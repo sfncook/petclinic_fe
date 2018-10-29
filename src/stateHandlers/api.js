@@ -106,3 +106,14 @@ export function saveApptApi(appt) {
     .then(response =>response.json())
     .catch(error => {return error});
 }
+export function deleteApptApi(appt) {
+  return fetch(url+'/appointments', {
+    method: 'DELETE',
+    body: JSON.stringify(appt),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}

@@ -9,7 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { createNewAppt, saveAppt } from "../stateHandlers/actions";
+import { createNewAppt, saveAppt, deleteAppt } from "../stateHandlers/actions";
 import ApptRow from './ApptRow';
 
 const purple = '#3f51b5';
@@ -65,6 +65,9 @@ class ApptsView_ extends Component {
     this.setState({creatingNewAppt:false});
     this.props.createNewAppt(appt);
   };
+  handleDelete = (appt) => {
+    this.props.deleteAppt(appt);
+  };
 
   constructor(props) {
     super(props);
@@ -74,6 +77,7 @@ class ApptsView_ extends Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleCreateNew = this.handleCreateNew.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   render() {
@@ -87,6 +91,7 @@ class ApptsView_ extends Component {
           createNewRow={false}
           handleSave={this.handleSave}
           handleCancel={this.handleCancel}
+          handleDelete={this.handleDelete}
           pets={this.props.pets}
           vets={this.props.vets}
         />
@@ -152,6 +157,7 @@ const mapDispatchToProps = dispatch => {
   return {
     createNewAppt: (appt) => {dispatch(createNewAppt(appt))},
     saveAppt: (appt) => {dispatch(saveAppt(appt))},
+    deleteAppt: (appt) => {dispatch(deleteAppt(appt))},
   }
 };
 

@@ -72,6 +72,10 @@ class ApptRow extends Component {
       appt: newApptState,
     });
   };
+  handleDelete() {
+    this.setState({editing:false});
+    this.props.handleDelete(this.state.appt);
+  };
   handleSave() {
     this.setState({editing:false});
     this.props.handleSave(this.state.appt);
@@ -100,6 +104,7 @@ class ApptRow extends Component {
     this.handleChangePet = this.handleChangePet.bind(this);
     this.handleChangeVet = this.handleChangeVet.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.findPetById = this.findPetById.bind(this);
@@ -112,7 +117,15 @@ class ApptRow extends Component {
     let saveBtnBgColor = purple;
 
     let actionBtns = [];
-    if(this.state.editing || this.props.createNewRow) {
+    if(this.state.editing) {
+      actionBtns.push(
+        <span key={1} style={{'whiteSpace': 'nowrap'}}>
+          <Button onClick={this.handleCancel}>Cancel</Button>
+          <Button style={{'backgroundColor':saveBtnBgColor, 'color':'white'}} onClick={this.handleSave}>Save</Button>
+          <Button style={{'backgroundColor':purple, 'color':'white'}} onClick={this.handleDelete}>Cancel Appt</Button>
+        </span>
+      );
+    } else if(this.props.createNewRow) {
       actionBtns.push(
         <span key={1}>
           <Button onClick={this.handleCancel}>Cancel</Button>
@@ -205,6 +218,7 @@ ApptRow.propTypes = {
   createNewRow: PropTypes.bool,
   handleSave: PropTypes.func,
   handleCancel: PropTypes.func,
+  handleDelete: PropTypes.func,
 
 };
 

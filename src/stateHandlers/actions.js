@@ -1,5 +1,10 @@
 import {FETCHING_PETS, RECVD_PETS, FETCHING_VETS, RECVD_VETS, FETCHING_APPTS, RECVD_APPTS} from './actionTypes'
-import { getAllPetsApi, getAllVetsApi, getAllApptsApi, createNewPetApi, savePetApi, createNewVetApi, saveVetApi, createNewApptApi, saveApptApi } from './api'
+import {
+  getAllPetsApi, getAllVetsApi, getAllApptsApi,
+  createNewPetApi, savePetApi, createNewVetApi,
+  saveVetApi, createNewApptApi, saveApptApi,
+  deleteApptApi
+} from './api'
 
 
 // --- Pets ---
@@ -118,6 +123,16 @@ export function saveAppt(appt) {
   return dispatch => {
     dispatch(fetchingAppts());
     return saveApptApi(appt)
+      .then(()=> {
+        return getAllApptsApi()
+          .then(apptsJson => dispatch(receivedAppts(apptsJson)))
+      })
+  }
+}
+export function deleteAppt(appt) {
+  return dispatch => {
+    dispatch(fetchingAppts());
+    return deleteApptApi(appt)
       .then(()=> {
         return getAllApptsApi()
           .then(apptsJson => dispatch(receivedAppts(apptsJson)))
