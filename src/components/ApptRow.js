@@ -194,7 +194,7 @@ class ApptRow extends Component {
           <TextField
             disabled={true}
             id="date"
-            label="Birthday"
+            label="Start Time"
             type="datetime-local"
             defaultValue={ApptRow.convertDateTime(appt.startTime)}
             InputLabelProps={{
@@ -206,7 +206,7 @@ class ApptRow extends Component {
           <TextField
             disabled={true}
             id="date"
-            label="Birthday"
+            label="End Time"
             type="datetime-local"
             defaultValue={ApptRow.convertDateTime(appt.endTime)}
             InputLabelProps={{
