@@ -13,21 +13,26 @@ const purple = '#3f51b5';
 class ApptRow extends Component {
 
   static convertDateTime = (sqlDateTime) => {
-    const dateAndTime = sqlDateTime.split(' ');
-    const date = dateAndTime[0];
-    const yrMthDay = date.split('-');
-    const day = yrMthDay[0];
-    const mth = yrMthDay[1];
-    const year = yrMthDay[2];
+    try {
+      console.log('convertDateTime sqlDateTime:',sqlDateTime);
+      const dateAndTime = sqlDateTime.split(' ');
+      const date = dateAndTime[0];
+      const yrMthDay = date.split('-');
+      const day = yrMthDay[0];
+      const mth = yrMthDay[1];
+      const year = yrMthDay[2];
 
-    const time = dateAndTime[1];
-    const hrMnSec = time.split(':');
-    const hour = hrMnSec[0];
-    const min = hrMnSec[1];
+      const time = dateAndTime[1];
+      const hrMnSec = time.split(':');
+      const hour = hrMnSec[0];
+      const min = hrMnSec[1];
 
-    const str = year+'-'+mth+'-'+day+'T'+hour+':'+min;
-    // console.log('datetime str:',str);
-    return str;
+      const str = year+'-'+mth+'-'+day+'T'+hour+':'+min;
+      console.log('datetime str:',str);
+      return str;
+    } catch(e) {
+      return sqlDateTime;
+    }
   };
 
   static defaultProps = {
@@ -68,6 +73,24 @@ class ApptRow extends Component {
     const chosenVet = this.findVetById(event.target.value);
     const newApptState = Object.assign({}, this.state.appt, {
       vet: chosenVet,
+    });
+    this.setState({
+      appt: newApptState,
+    });
+  };
+  handleChangeStartTime(event) {
+    console.log('handleChangeStartTime event.target.value:',event.target.value);
+    const newApptState = Object.assign({}, this.state.appt, {
+      startTime: event.target.value,
+    });
+    this.setState({
+      appt: newApptState,
+    });
+  };
+  handleChangeEndTime(event) {
+    console.log('log event.target.value:',event.target.value);
+    const newApptState = Object.assign({}, this.state.appt, {
+      endTime: event.target.value,
     });
     this.setState({
       appt: newApptState,
@@ -117,6 +140,8 @@ class ApptRow extends Component {
     this.findPetById = this.findPetById.bind(this);
     this.findVetById = this.findVetById.bind(this);
     this.openDeleteApptVerifyDlg = this.openDeleteApptVerifyDlg.bind(this);
+    this.handleChangeStartTime = this.handleChangeStartTime.bind(this);
+    this.handleChangeEndTime = this.handleChangeEndTime.bind(this);
   }
 
   render() {
@@ -192,10 +217,11 @@ class ApptRow extends Component {
         </TableCell>
         <TableCell component="th" scope="row">
           <TextField
-            disabled={true}
+            disabled={!(this.state.editing || this.props.createNewRow)}
             id="date"
             label="Start Time"
             type="datetime-local"
+            onChange={this.handleChangeStartTime}
             defaultValue={ApptRow.convertDateTime(appt.startTime)}
             InputLabelProps={{
               shrink: true,
@@ -204,10 +230,11 @@ class ApptRow extends Component {
         </TableCell>
         <TableCell component="th" scope="row">
           <TextField
-            disabled={true}
+            disabled={!(this.state.editing || this.props.createNewRow)}
             id="date"
             label="End Time"
             type="datetime-local"
+            onChange={this.handleChangeEndTime}
             defaultValue={ApptRow.convertDateTime(appt.endTime)}
             InputLabelProps={{
               shrink: true,
