@@ -12,6 +12,7 @@ class PetRow extends Component {
   static defaultProps = {
     createNewRow: false,
     visible: true,
+    editing: false,
   };
 
   handleChangeName(event) {
@@ -20,27 +21,51 @@ class PetRow extends Component {
     });
   };
   handleSave() {
+    this.setState({editing:false});
     this.props.handleSave(this.state.pet);
   };
   handleCancel() {
+    this.setState({editing:false});
     this.props.handleCancel();
+  };
+  handleEdit() {
+    this.setState({editing:true});
   };
 
   constructor(props) {
     super(props);
     this.state = {
       pet: props.pet,
-      editing: false,
     };
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   render() {
     const validPetName = this.state.pet && this.state.pet.name && this.state.pet.name.length > 0;
     let saveBtnBgColor = (validPetName) ? purple : 'lightgray';
     let nameFieldBgColor = (this.state.editing || this.props.createNewRow) ? 'lightgreen' : 'inherit';
+
+    let actionBtns = [];
+    if(this.state.editing || this.props.createNewRow) {
+      actionBtns.push(
+        <span key={1}>
+          <Button onClick={this.handleCancel}>Cancel</Button>
+          <Button disabled={!validPetName} style={{'backgroundColor':saveBtnBgColor, 'color':'white'}} onClick={this.handleSave}>Save</Button>
+        </span>
+      );
+    } else {
+      if(!this.state.createNewRow) {
+          actionBtns.push(
+            <span key={1}>
+              <Button onClick={this.handleEdit}>Edit</Button>
+            </span>
+          );
+      }
+    }
+
     if(this.props.visible) {
       return (
         <TableRow>
@@ -52,14 +77,7 @@ class PetRow extends Component {
               defaultValue={this.props.pet.name}
               onChange={this.handleChangeName}
             />
-            {(this.state.editing || this.props.createNewRow) ?
-              <span>
-                <Button onClick={this.handleCancel}>Cancel</Button>
-                <Button disabled={!validPetName} style={{'backgroundColor':saveBtnBgColor, 'color':'white'}} onClick={this.handleSave}>Save</Button>
-              </span>
-              :
-              <span/>
-            }
+            {actionBtns}
           </TableCell>
         </TableRow>
       );

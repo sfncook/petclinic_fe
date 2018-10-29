@@ -57,10 +57,9 @@ class PetsView_ extends Component {
   handleSave = (pet) => {
     this.setState({creatingNewPet:false});
     // this.props.createNewPet(pet);
-  };onClickCancel
+  };
   handleCancel = (pet) => {
     this.setState({creatingNewPet:false});
-    this.props.createNewPet(pet);
   };
   handleCreateNew = (pet) => {
     this.setState({creatingNewPet:false});
