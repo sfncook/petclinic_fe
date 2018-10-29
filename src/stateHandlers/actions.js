@@ -1,4 +1,4 @@
-import { FETCHING_PETS, RECVD_PETS, FETCHING_VETS, RECVD_VETS, FETCHING_APPTS, RECVD_APPTS, ERR_SAVING_APPT } from './actionTypes'
+import { FETCHING_PETS, RECVD_PETS, FETCHING_VETS, RECVD_VETS, FETCHING_APPTS, RECVD_APPTS, ERR_SAVING_APPT,ACK_ERR_SAVING_APPT } from './actionTypes'
 import {
   getAllPetsApi, getAllVetsApi, getAllApptsApi,
   createNewPetApi, savePetApi, createNewVetApi,
@@ -97,7 +97,6 @@ export function fetchingAppts() {
   }
 }
 export function receivedAppts(apptsJson) {
-  console.log('receivedAppts apptsJson:',apptsJson);
   return {
     type: RECVD_APPTS,
     appts: apptsJson,
@@ -107,6 +106,11 @@ export function errorSavingAppt(errSavingApptMsg) {
   return {
     type: ERR_SAVING_APPT,
     errSavingApptMsg: errSavingApptMsg,
+  }
+}
+export function ackErrorSavingAppt() {
+  return {
+    type: ACK_ERR_SAVING_APPT,
   }
 }
 export function getAllAppts() {

@@ -7,6 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import {ackErrorSavingAppt} from "../stateHandlers/actions";
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -56,10 +58,27 @@ class NavBar_ extends Component {
     this.props.history.push('/appts');
   };
 
-  render() {
+  onClickAckError = () => {
+    this.props.ackErrorSavingAppt();
+  }
 
+  render() {
+    const { classes } = this.props;
+
+    let errorComp = '';
     if(this.props.errSavingApptMsg.length>0) {
-      console.log('NavBar err:', this.props.errSavingApptMsg);
+      errorComp = <Toolbar style={{'backgroundColor':'salmon'}} className={classes.toolbar} >
+        <Typography
+          component="h1"
+          variant="h6"
+          color="inherit"
+          noWrap
+          className={classes.title}
+        >
+          {this.props.errSavingApptMsg}
+        </Typography>
+        <Button color="inherit" onClick={this.onClickAckError.bind(this)} >X</Button>
+      </Toolbar>;
     }
 
     const purple = '#3f51b5';
@@ -80,7 +99,6 @@ class NavBar_ extends Component {
       apptsColor = purple;
     }
 
-    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <AppBar
@@ -100,6 +118,7 @@ class NavBar_ extends Component {
             <Button style={{'backgroundColor':vetsBtnColor, 'color':vetsColor}} onClick={this.onClickVets.bind(this)}>Vets</Button>
             <Button style={{'backgroundColor':apptsBtnColor, 'color':apptsColor}} onClick={this.onClickAppts.bind(this)}>Appts</Button>
           </Toolbar>
+          {errorComp}
         </AppBar>
       </div>
     );
@@ -115,6 +134,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    ackErrorSavingAppt: () => {dispatch(ackErrorSavingAppt())},
   }
 };
 

@@ -1,5 +1,5 @@
 
-import {ERR_SAVING_APPT, RECVD_APPTS, RECVD_PETS, RECVD_VETS} from './actionTypes'
+import {ACK_ERR_SAVING_APPT, ERR_SAVING_APPT, RECVD_APPTS, RECVD_PETS, RECVD_VETS} from './actionTypes'
 
 
 const initialState = {
@@ -49,6 +49,11 @@ function petClinicReducer(state = initialState, action) {
     case ERR_SAVING_APPT:
       return Object.assign({}, state, {
         errSavingApptMsg: action.errSavingApptMsg,
+      });
+
+    case ACK_ERR_SAVING_APPT:
+      return Object.assign({}, state, {
+        errSavingApptMsg: '',
       });
 
     case RECVD_APPTS:
