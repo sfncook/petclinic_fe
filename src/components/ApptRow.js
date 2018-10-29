@@ -45,10 +45,28 @@ class ApptRow extends Component {
     }
     return {};
   }
+  findVetById(vetId) {
+    let vet;
+    for(vet of this.props.vets) {
+      if(vet.id===vetId) {
+        return vet;
+      }
+    }
+    return {};
+  }
   handleChangePet(event) {
     const chosenPet = this.findPetById(event.target.value);
     const newApptState = Object.assign({}, this.state.appt, {
       pet: chosenPet,
+    });
+    this.setState({
+      appt: newApptState,
+    });
+  };
+  handleChangeVet(event) {
+    const chosenVet = this.findVetById(event.target.value);
+    const newApptState = Object.assign({}, this.state.appt, {
+      vet: chosenVet,
     });
     this.setState({
       appt: newApptState,
@@ -80,18 +98,18 @@ class ApptRow extends Component {
       appt: props.appt,
     };
     this.handleChangePet = this.handleChangePet.bind(this);
+    this.handleChangeVet = this.handleChangeVet.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.findPetById = this.findPetById.bind(this);
+    this.findVetById = this.findVetById.bind(this);
   }
 
   render() {
     const appt = this.state.appt;
-    // const validApptName = this.state.appt && this.state.appt.name && this.state.appt.name.length > 0;
-    // let saveBtnBgColor = (validApptName) ? purple : 'lightgray';
+
     let saveBtnBgColor = purple;
-    // let fieldBgColor = (this.state.editing || this.props.createNewRow) ? 'lightgreen' : 'inherit';
 
     let actionBtns = [];
     if(this.state.editing || this.props.createNewRow) {
@@ -116,6 +134,11 @@ class ApptRow extends Component {
         <MenuItem key={pet.id} value={pet.id}>{pet.name}</MenuItem>
       );
     });
+    let vetMenuItems = this.props.vets.map(vet => {
+      return (
+        <MenuItem key={vet.id} value={vet.id}>{vet.name}</MenuItem>
+      );
+    });
 
     return (
       <TableRow>
@@ -133,7 +156,17 @@ class ApptRow extends Component {
           </Select>
         </TableCell>
         <TableCell component="th" scope="row">
-          {appt.vet.name}
+          <Select
+            value={this.state.appt.vet.id}
+            onChange={this.handleChangeVet}
+            disabled={!(this.state.editing || this.props.createNewRow)}
+            inputProps={{
+              name: 'appt-vet-select',
+              id: 'appt-vet-select',
+            }}
+          >
+            {vetMenuItems}
+          </Select>
         </TableCell>
         <TableCell component="th" scope="row">
           <TextField
