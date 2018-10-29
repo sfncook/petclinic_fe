@@ -38,13 +38,15 @@ class PetRow extends Component {
   }
 
   render() {
-    let bgColor = (this.state.editing || this.props.createNewRow) ? 'lightgreen' : 'inherit';
+    const validPetName = this.state.pet && this.state.pet.name && this.state.pet.name.length > 0;
+    let saveBtnBgColor = (validPetName) ? purple : 'lightgray';
+    let nameFieldBgColor = (this.state.editing || this.props.createNewRow) ? 'lightgreen' : 'inherit';
     if(this.props.visible) {
       return (
         <TableRow>
           <TableCell component="th" scope="row">
             <TextField
-              style={{'backgroundColor': bgColor}}
+              style={{'backgroundColor': nameFieldBgColor}}
               disabled={!(this.state.editing || this.props.createNewRow)}
               id="pet-name"
               defaultValue={this.props.pet.name}
@@ -53,7 +55,7 @@ class PetRow extends Component {
             {(this.state.editing || this.props.createNewRow) ?
               <span>
                 <Button onClick={this.handleCancel}>Cancel</Button>
-                <Button style={{'backgroundColor':purple, 'color':'white'}} onClick={this.handleSave}>Save</Button>
+                <Button disabled={!validPetName} style={{'backgroundColor':saveBtnBgColor, 'color':'white'}} onClick={this.handleSave}>Save</Button>
               </span>
               :
               <span/>

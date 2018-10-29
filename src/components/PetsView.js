@@ -125,7 +125,7 @@ class PetsView_ extends Component {
                   {petRows}
                 </TableBody>
               </Table>
-              <div style={{'textAlign':'left'}}>
+              <div hidden={this.state.creatingNewPet} style={{'textAlign':'left'}}>
                 <Button
                   style={{'backgroundColor': purple, 'color': 'white', 'marginLeft': '20px', 'marginTop': '10px'}}
                   onClick={this.onClickAddNewPet.bind(this)}>+ Add New</Button>
