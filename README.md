@@ -12,3 +12,5 @@ $ npm start
 
 ## Explanation of Project
 This project was initialized using [create-react-app](https://github.com/facebook/create-react-app) (I'm not sure which version I am using).  It uses ReactJs, Redux, MaterialUi (for UI components), and a fairly shallow component tree.
+
+Don't forget to checkout the Feature and Bug List over on the [BE project page](https://github.com/sfncook/petclinic_be).
