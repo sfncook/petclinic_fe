@@ -148,9 +148,8 @@ export function saveApptApi(appt) {
     .catch(error => {throw error;});
 }
 export function deleteApptApi(appt) {
-  return fetch(url+'/appointments', {
+  return fetch(url+'/appointments/'+appt.id, {
     method: 'DELETE',
-    body: JSON.stringify(appt),
     headers: {
       'Content-Type': 'application/json'
     },
