@@ -51,7 +51,24 @@ const styles = theme => ({
 
 class PetsView_ extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      creatingNewPet: false,
+    };
+  }
+
   onClickAddNewPet = () => {
+    this.setState({creatingNewPet:true});
+  };
+
+  onClickCancel = () => {
+    this.setState({creatingNewPet:false});
+  };
+
+  onClickSave = () => {
+    this.setState({creatingNewPet:false});
+    //TODO: dispatch save action
   };
 
   render() {
@@ -78,10 +95,20 @@ class PetsView_ extends Component {
                       <PetRow key={pet.id} pet={pet} createNewRow={false} />
                     );
                   })}
+                  <PetRow key={'createNewPetRow'} pet={{}} createNewRow={true} visible={this.state.creatingNewPet} />
                 </TableBody>
               </Table>
               <div style={{'textAlign':'left'}}>
-                <Button style={{'backgroundColor':purple, 'color':'white', 'marginLeft':'20px', 'marginTop':'10px'}} onClick={this.onClickAddNewPet.bind(this)}>+ Add New</Button>
+                {this.state.creatingNewPet ?
+                  <div>
+                    <Button onClick={this.onClickCancel.bind(this)}>Cancel</Button>
+                    <Button style={{'backgroundColor':purple, 'color':'white'}} onClick={this.onClickSave.bind(this)}>Save</Button>
+                  </div>
+                  :
+                  <Button
+                    style={{'backgroundColor': purple, 'color': 'white', 'marginLeft': '20px', 'marginTop': '10px'}}
+                    onClick={this.onClickAddNewPet.bind(this)}>+ Add New</Button>
+                }
               </div>
             </div>
           </main>

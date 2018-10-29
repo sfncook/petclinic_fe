@@ -8,6 +8,11 @@ import TextField from '@material-ui/core/TextField';
 
 class PetRow extends Component {
 
+  static defaultProps = {
+    createNewRow: false,
+    visible: true,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,24 +28,31 @@ class PetRow extends Component {
   };
 
   render() {
-    return (
-      <TableRow>
-        <TableCell component="th" scope="row">
-          <TextField
-            disabled={!this.state.editing || this.props.createNewRow}
-            id="pet-name"
-            defaultValue={this.props.pet.name}
-            onChange={this.handleChangeName.bind(this)}
-          />
-        </TableCell>
-      </TableRow>
-    );
-  }
+    let bgColor = (this.state.editing || this.props.createNewRow) ? 'lightgreen' : 'inherit';
+    if(this.props.visible) {
+      return (
+        <TableRow>
+          <TableCell component="th" scope="row">
+            <TextField
+              style={{'backgroundColor': bgColor}}
+              disabled={!(this.state.editing || this.props.createNewRow)}
+              id="pet-name"
+              defaultValue={this.props.pet.name}
+              onChange={this.handleChangeName.bind(this)}
+            />
+          </TableCell>
+        </TableRow>
+      );
+    } else {
+      return (<div />);
+    }//else
+  }// render()
 }
 
 PetRow.propTypes = {
   pet: PropTypes.object.isRequired,
   createNewRow: PropTypes.bool,
+  visible: PropTypes.bool,
 };
 
 export default PetRow;
