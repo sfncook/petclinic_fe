@@ -8,6 +8,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import petClinicReducer from './stateHandlers/reducers';
+import {getAllVets, getAllPets, getAllAppts} from './stateHandlers/actions'
 
 const loggerMiddleware = createLogger();
 
@@ -23,3 +24,7 @@ render(
   </Provider>,
   document.getElementById('root')
 );
+
+store.dispatch(getAllPets());
+store.dispatch(getAllVets());
+store.dispatch(getAllAppts());

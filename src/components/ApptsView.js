@@ -9,7 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { getAllAppts, createNewAppt, saveAppt } from "../stateHandlers/actions";
+import { createNewAppt, saveAppt } from "../stateHandlers/actions";
 import ApptRow from './ApptRow';
 
 const purple = '#3f51b5';
@@ -138,11 +138,6 @@ class ApptsView_ extends Component {
       </div>
     );
   }
-
-  componentDidMount() {
-    this.props.getAllAppts();
-  }
-
 }
 
 const mapStateToProps = state => {
@@ -155,7 +150,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllAppts: () => {dispatch(getAllAppts())},
     createNewAppt: (appt) => {dispatch(createNewAppt(appt))},
     saveAppt: (appt) => {dispatch(saveAppt(appt))},
   }

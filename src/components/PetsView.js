@@ -9,7 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { getAllPets, createNewPet, savePet } from "../stateHandlers/actions";
+import { createNewPet, savePet } from "../stateHandlers/actions";
 import PetRow from './PetRow';
 
 const purple = '#3f51b5';
@@ -135,10 +135,6 @@ class PetsView_ extends Component {
     );
   }
 
-  componentDidMount() {
-    this.props.getAllPets();
-  }
-
 }
 
 const mapStateToProps = state => {
@@ -149,7 +145,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllPets: () => {dispatch(getAllPets())},
     createNewPet: (pet) => {dispatch(createNewPet(pet))},
     savePet: (pet) => {dispatch(savePet(pet))},
   }
