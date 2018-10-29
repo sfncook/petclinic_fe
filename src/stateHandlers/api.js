@@ -61,7 +61,6 @@ export function createNewVetApi(vet) {
     .catch(error => {return error});
 }
 export function saveVetApi(vet) {
-  console.log('api saveVetApi vet:',vet);
   return fetch(url+'/vets', {
     method: 'PUT',
     body: JSON.stringify(vet),
@@ -81,6 +80,28 @@ export function getAllApptsApi() {
     headers: {
       'Content-Type': 'application/json'
     }
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}
+export function createNewApptApi(appt) {
+  return fetch(url+'/appointments', {
+    method: 'POST',
+    body: JSON.stringify(appt),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response =>response.json())
+    .catch(error => {return error});
+}
+export function saveApptApi(appt) {
+  return fetch(url+'/appointments', {
+    method: 'PUT',
+    body: JSON.stringify(appt),
+    headers: {
+      'Content-Type': 'application/json'
+    },
   })
     .then(response =>response.json())
     .catch(error => {return error});

@@ -58,7 +58,7 @@ class VetsView_ extends Component {
     this.setState({creatingNewVet:false});
     this.props.saveVet(vet);
   };
-  handleCancel = (vet) => {
+  handleCancel = () => {
     this.setState({creatingNewVet:false});
   };
   handleCreateNew = (vet) => {

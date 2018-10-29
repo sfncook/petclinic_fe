@@ -1,5 +1,5 @@
 import {FETCHING_PETS, RECVD_PETS, FETCHING_VETS, RECVD_VETS, FETCHING_APPTS, RECVD_APPTS} from './actionTypes'
-import { getAllPetsApi, getAllVetsApi, getAllApptsApi, createNewPetApi, savePetApi, createNewVetApi, saveVetApi } from './api'
+import { getAllPetsApi, getAllVetsApi, getAllApptsApi, createNewPetApi, savePetApi, createNewVetApi, saveVetApi, createNewApptApi, saveApptApi } from './api'
 
 
 // --- Pets ---
@@ -16,14 +16,14 @@ export function receivedPets(petsJson) {
 }
 export function getAllPets() {
   return dispatch => {
-    dispatch(fetchingPets())
+    dispatch(fetchingPets());
     return getAllPetsApi()
       .then(petsJson => dispatch(receivedPets(petsJson)))
   }
 }
 export function createNewPet(pet) {
   return dispatch => {
-    dispatch(fetchingPets())
+    dispatch(fetchingPets());
     return createNewPetApi(pet)
       .then(()=> {
         return getAllPetsApi()
@@ -33,7 +33,7 @@ export function createNewPet(pet) {
 }
 export function savePet(pet) {
   return dispatch => {
-    dispatch(fetchingPets())
+    dispatch(fetchingPets());
     return savePetApi(pet)
       .then(()=> {
         return getAllPetsApi()
@@ -57,14 +57,14 @@ export function receivedVets(vetsJson) {
 }
 export function getAllVets() {
   return dispatch => {
-    dispatch(fetchingVets())
+    dispatch(fetchingVets());
     return getAllVetsApi()
       .then(vetsJson => dispatch(receivedVets(vetsJson)))
   }
 }
 export function createNewVet(vet) {
   return dispatch => {
-    dispatch(fetchingVets())
+    dispatch(fetchingVets());
     return createNewVetApi(vet)
       .then(()=> {
         return getAllVetsApi()
@@ -74,7 +74,7 @@ export function createNewVet(vet) {
 }
 export function saveVet(vet) {
   return dispatch => {
-    dispatch(fetchingVets())
+    dispatch(fetchingVets());
     return saveVetApi(vet)
       .then(()=> {
         return getAllVetsApi()
@@ -99,8 +99,28 @@ export function receivedAppts(apptsJson) {
 }
 export function getAllAppts() {
   return dispatch => {
-    dispatch(fetchingAppts())
+    dispatch(fetchingAppts());
     return getAllApptsApi()
       .then(apptsJson => dispatch(receivedAppts(apptsJson)))
+  }
+}
+export function createNewAppt(appt) {
+  return dispatch => {
+    dispatch(fetchingAppts());
+    return createNewApptApi(appt)
+      .then(()=> {
+        return getAllApptsApi()
+          .then(apptsJson => dispatch(receivedAppts(apptsJson)))
+      })
+  }
+}
+export function saveAppt(appt) {
+  return dispatch => {
+    dispatch(fetchingAppts());
+    return saveApptApi(appt)
+      .then(()=> {
+        return getAllApptsApi()
+          .then(apptsJson => dispatch(receivedAppts(apptsJson)))
+      })
   }
 }

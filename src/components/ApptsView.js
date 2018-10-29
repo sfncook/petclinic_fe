@@ -58,7 +58,7 @@ class ApptsView_ extends Component {
     this.setState({creatingNewAppt:false});
     this.props.saveAppt(appt);
   };
-  handleCancel = (appt) => {
+  handleCancel = () => {
     this.setState({creatingNewAppt:false});
   };
   handleCreateNew = (appt) => {

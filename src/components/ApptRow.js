@@ -23,7 +23,7 @@ class ApptRow extends Component {
     const min = hrMnSec[1];
 
     const str = year+'-'+mth+'-'+day+'T'+hour+':'+min;
-    console.log('datetime str:',str);
+    // console.log('datetime str:',str);
     return str;
   };
 
@@ -42,14 +42,19 @@ class ApptRow extends Component {
     this.props.handleSave(this.state.appt);
   };
   handleCancel() {
-    console.log('editingName:',this.state.editingName);
-    this.setState({editing:false});
-    this.setState({appt:{name:this.state.editingName}});
+    const newState = Object.assign({}, this.state, {
+      appt: this.state.editingAppt,
+      editing:false,
+    });
+    this.setState(newState);
     this.props.handleCancel();
   };
   handleEdit() {
-    this.setState({editing:true});
-    this.setState({editingName:this.state.appt.name});
+    const newState = Object.assign({}, this.state, {
+      editingAppt: this.state.appt,
+      editing:true
+    });
+    this.setState(newState);
   };
 
   constructor(props) {
@@ -64,12 +69,11 @@ class ApptRow extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const appt = this.state.appt;
     // const validApptName = this.state.appt && this.state.appt.name && this.state.appt.name.length > 0;
     // let saveBtnBgColor = (validApptName) ? purple : 'lightgray';
     let saveBtnBgColor = purple;
-    let fieldBgColor = (this.state.editing || this.props.createNewRow) ? 'lightgreen' : 'inherit';
+    // let fieldBgColor = (this.state.editing || this.props.createNewRow) ? 'lightgreen' : 'inherit';
 
     let actionBtns = [];
     if(this.state.editing || this.props.createNewRow) {
@@ -104,7 +108,6 @@ class ApptRow extends Component {
             label="Birthday"
             type="datetime-local"
             defaultValue={ApptRow.convertDateTime(appt.startTime)}
-            className={classes.textField}
             InputLabelProps={{
               shrink: true,
             }}
@@ -117,11 +120,11 @@ class ApptRow extends Component {
             label="Birthday"
             type="datetime-local"
             defaultValue={ApptRow.convertDateTime(appt.endTime)}
-            className={classes.textField}
             InputLabelProps={{
               shrink: true,
             }}
           />
+          {actionBtns}
         </TableCell>
       </TableRow>
     );
